@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equation Calculator</title>
+    <style>
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+		input[type=number] {
+			-moz-appearance: textfield; /* For Firefox */
+		}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .equation-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 5px;
+            background: #f5f5f5;
+        }
+        input {
+            width: 80px;
+            padding: 3px;
+        }
+        button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+        .result {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Equation Calculator</h2>
+
+    <!-- Equation 1 -->
+    <div class="equation-row" id="equation1">
+        <span>Board feet Calculator: </span>
+		<label for="eq1_L">L</label>
+		<input type="number" id="eq1_L" placeholder="length (in)">
+		<label for="eq1_W">W</label>
+        <input type="number" id="eq1_W" placeholder="width (in)">
+		<label for="eq1_t">t</label>
+        <input type="number" id="eq1_t" placeholder="thickness(in)">
+		<label for="eq1_n">#</label>
+        <input type="number" id="eq1_n" placeholder="# of pieces">
+        <button onclick="calculate1()">Calculate</button>
+        <span class="result" id="result1">0</span>
+        <span>board feet</span>
+    </div>
+
+    <!-- Equation 2 -->
+    <div class="equation-row" id="equation2">
+        <span>Speed of sound: </span>
+		<label for="eq2_T">T(K)</label>
+        <input type="number" id="eq2_T" placeholder="temp (k)">
+		<label for="eq2_g">γ</label>
+        <input type="number" id="eq2_g" placeholder="gamma">
+        <button onclick="calculate2()">Calculate</button>
+        <span class="result" id="result2">0</span>
+        <span>m/s</span>
+    </div>
+
+
+    <!-- Specific impulse, deflection, falling time w drag, orbital mechanics -->
+
+    <script>
+        function calculate1() {
+            const L = parseFloat(document.getElementById('eq1_L').value) || 0;
+            const W = parseFloat(document.getElementById('eq1_W').value) || 0;
+            const t = parseFloat(document.getElementById('eq1_t').value) || 0;
+            const n = parseFloat(document.getElementById('eq1_n').value) || 0;
+            document.getElementById('result1').textContent = (n*L*W*t/144).toFixed(2);
+        }
+
+        function calculate2() {
+            const t = parseFloat(document.getElementById('eq2_T').value) || 0;
+            const g = parseFloat(document.getElementById('eq2_g').value) || 0;
+            document.getElementById('result2').textContent = (Math.sqrt(t*g*8.31446261815324/0.02897)).toFixed(2);
+        }
+		        // Add event listeners for enter key
+        document.getElementById('equation1').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculate1();
+            }
+        });
+
+        document.getElementById('equation2').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculate2();
+            }
+        });
+    </script>
+</body>
+</html>
