@@ -44,7 +44,7 @@
 <body>
     <h2>Equations and Calculators</h2>
 
-    <!-- Equation 1 -->
+    <!-- Board Feet -->
     <div class="equation-row" id="equation1">
         <span>Board feet Calculator: </span>
 		<label for="eq1_L">L</label>
@@ -60,47 +60,93 @@
         <span>board feet</span>
     </div>
 
-    <!-- Equation 2 -->
+    <!-- Speed of Sound -->
     <div class="equation-row" id="equation2">
         <span>Speed of sound: </span>
 		<label for="eq2_T">T(K)</label>
-        <input type="number" id="eq2_T" placeholder="temp (k)">
+        <input type="number" id="eq2_T" placeholder="288.15 K">
 		<label for="eq2_g">γ</label>
-        <input type="number" id="eq2_g" placeholder="gamma">
+        <input type="number" id="eq2_g" placeholder="1.4">
         <button onclick="calculate2()">Calculate</button>
         <span class="result" id="result2">0</span>
         <span>m/s</span>
     </div>
+	
+    <!-- Skydiving Time -->
+    <div class="equation-row" id="equation3">
+        <span>Skydiving Freefall Time:</span>
+		<label for="eq3_A1">Jump (ft):</label>
+        <input type="number" id="eq3_A1" placeholder="altitude (ft)">
+		<label for="eq3_A2">Pull (ft):</label>
+        <input type="number" id="eq3_A2" placeholder="altitude (ft)">
+        <button onclick="calculate3()">Calculate</button>
+        <span>Hill time</span>
+        <span class="result" id="result31">0</span>
+        <span>s</span>
+        <span>| Terminal time</span>
+        <span class="result" id="result32">0</span>
+        <span>s</span>
+        <span>|  Total time</span>
+        <span class="result" id="result33">0</span>
+        <span>s</span>
+    </div>
+	
+    <!-- Orbital Parameters -->
+    <div class="equation-row" id="equation2">
+        <span>Orbital Parameters: </span>
+		<label for="eq4_A">Altitude (km)</label>
+        <input type="number" id="eq4_A" placeholder="altitude (km)">
+        <button onclick="calculate4()">Calculate</button>
+        <span>Velocity</span>
+        <span class="result" id="result41">0</span>
+        <span>m/s</span>
+        <span>Period</span>
+        <span class="result" id="result42">0</span>
+        <span>minutes</span>
+    </div>
+	
 
+<!-- Specific impulse, deflection, orbital mechanics -->
 
-    <!-- Specific impulse, deflection, falling time w drag, orbital mechanics -->
+<script>
+	function calculate1() {
+		const L = parseFloat(document.getElementById('eq1_L').value) || 0;
+		const W = parseFloat(document.getElementById('eq1_W').value) || 0;
+		const t = parseFloat(document.getElementById('eq1_t').value) || 0;
+		const n = parseFloat(document.getElementById('eq1_n').value) || 0;
+		document.getElementById('result1').textContent = (n*L*W*t/144).toFixed(2);
+	}
 
-    <script>
-        function calculate1() {
-            const L = parseFloat(document.getElementById('eq1_L').value) || 0;
-            const W = parseFloat(document.getElementById('eq1_W').value) || 0;
-            const t = parseFloat(document.getElementById('eq1_t').value) || 0;
-            const n = parseFloat(document.getElementById('eq1_n').value) || 0;
-            document.getElementById('result1').textContent = (n*L*W*t/144).toFixed(2);
-        }
+	function calculate2() {
+		const t = parseFloat(document.getElementById('eq2_T').value) || 0;
+		const g = parseFloat(document.getElementById('eq2_g').value) || 0;
+		document.getElementById('result2').textContent = (Math.sqrt(t*g*8.31446261815324/0.02897)).toFixed(2);
+	}
+	
+	function calculate3() {
+		const A1 = parseFloat(document.getElementById('eq3_A1').value) || 0;
+		const A2 = parseFloat(document.getElementById('eq3_A2').value) || 0;
+		const result31 = 1.1*481/176;
+		const result32 = (A1-A2-result31)/176;
+		const result33 = result31 + result32;
+		document.getElementById('result31').textContent = result31.toFixed(2);
+		document.getElementById('result32').textContent = result32.toFixed(2);
+		document.getElementById('result33').textContent = result33.toFixed(2);
+	}	
 
-        function calculate2() {
-            const t = parseFloat(document.getElementById('eq2_T').value) || 0;
-            const g = parseFloat(document.getElementById('eq2_g').value) || 0;
-            document.getElementById('result2').textContent = (Math.sqrt(t*g*8.31446261815324/0.02897)).toFixed(2);
-        }
-		        // Add event listeners for enter key
-        document.getElementById('equation1').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                calculate1();
-            }
-        });
+	function calculate4() {
+		const A = parseFloat(document.getElementById('eq4_A').value) || 0;
+		document.getElementById('result41').textContent = (Math.sqrt(398600441800000/(A+6378)*1000)/1000).toFixed(4);
+		document.getElementById('result42').textContent = ((Math.sqrt((4*3.14159265**2*(A*1000+6378000)**3)/398600441800000))/60).toFixed(4);
+	}
 
-        document.getElementById('equation2').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                calculate2();
-            }
-        });
-    </script>
+	document.getElementById('equation1').addEventListener('keypress', function(event) {if (event.key === 'Enter') {calculate1();}});
+	document.getElementById('equation2').addEventListener('keypress', function(event) {if (event.key === 'Enter') {calculate2();}});
+	document.getElementById('equation3').addEventListener('keypress', function(event) {if (event.key === 'Enter') {calculate3();}});
+	document.getElementById('equation4').addEventListener('keypress', function(event) {if (event.key === 'Enter') {calculate4();}});
+	document.getElementById('equation5').addEventListener('keypress', function(event) {if (event.key === 'Enter') {calculate5();}});
+	document.getElementById('equation6').addEventListener('keypress', function(event) {if (event.key === 'Enter') {calculate6();}});
+	document.getElementById('equation7').addEventListener('keypress', function(event) {if (event.key === 'Enter') {calculate7();}});
+</script>
 </body>
 </html>
